@@ -1,0 +1,3 @@
+io.kestra.plugin.sifflet.RunRule
+io.kestra.plugin.templates.Example
+io.kestra.plugin.templates.Trigger

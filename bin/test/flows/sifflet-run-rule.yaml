@@ -1,0 +1,10 @@
+id: sifflet-run-rule
+namespace: io.kestra.tests
+
+tasks:
+  - id: run-rule
+    type: io.kestra.plugin.sifflet.RunRule
+    url: "https://app.siffletdata.com"
+    apiKey: "test-api-key"
+    ruleId: "test-rule-id"
+    httpTimeout: PT10M
