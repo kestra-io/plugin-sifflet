@@ -33,13 +33,48 @@
 <p align="center" style="color:grey;"><i>Get started with Kestra in 4 minutes.</i></p>
 
 
-# Kestra Plugin Template
+# Kestra Sifflet Plugin
 
-> A template for creating Kestra plugins
+> Kestra plugin for Sifflet data quality platform
 
-This repository serves as a general template for creating a new [Kestra](https://github.com/kestra-io/kestra) plugin. It should take only a few minutes! Use this repository as a scaffold to ensure that you've set up the plugin correctly, including unit tests and CI/CD workflows.
+This plugin provides integration with [Sifflet](https://www.siffletdata.com/), a data quality platform. It allows you to trigger Sifflet rules from your Kestra workflows.
 
 ![Kestra orchestrator](https://kestra.io/video.gif)
+
+## Usage
+
+### RunRule
+
+The `RunRule` task allows you to trigger a Sifflet rule by its ID.
+
+```yaml
+id: sifflet-run-rule
+namespace: io.kestra.examples
+
+tasks:
+  - id: run-rule
+    type: io.kestra.plugin.sifflet.RunRule
+    apiUrl: "https://tenant.siffletdata.com/api/v1"
+    accessToken: "{{ secret('SIFFLET_ACCESS_TOKEN') }}"
+    ruleId: "12345678-1234-1234-1234-123456789012"
+    connectionTimeout: PT30S
+    requestTimeout: PT1M
+```
+
+#### Properties
+
+- `apiUrl`: The base URL of the Sifflet API (e.g., https://tenant.siffletdata.com/api/v1)
+- `accessToken`: The access token for authenticating with the Sifflet API
+- `ruleId`: The ID of the Sifflet rule to run
+- `connectionTimeout` (optional): The timeout for establishing a connection to the Sifflet API
+- `requestTimeout` (optional): The timeout for the entire request to the Sifflet API
+
+#### Outputs
+
+- `statusCode`: HTTP status code from the Sifflet API response
+- `response`: Response body from the Sifflet API
+- `ruleId`: The ID of the rule that was triggered
+- `success`: Whether the rule was successfully triggered
 
 ## Running the project in local
 ### Prerequisites

@@ -35,10 +35,10 @@ import java.util.Map;
         })
 })
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
-    @Schema(title = "The Sifflet API URL", description = "The base URL of the Sifflet API (e.g., https://app.siffletdata.com)")
+    @Schema(title = "The Sifflet API base URL", description = "The base URL of the Sifflet API (e.g., https://app.siffletdata.com)")
     @PluginProperty(dynamic = true)
     @NotEmpty
-    private String url;
+    private String baseUrl;
 
     @Schema(title = "The Sifflet API key", description = "The API key used for authentication with Sifflet")
     @PluginProperty(dynamic = true)
@@ -62,12 +62,12 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
     @Override
     public Output run(RunContext runContext) throws Exception {
-        String resolvedUrl = runContext.render(url);
+        String resolvedBaseUrl = runContext.render(baseUrl);
         String resolvedApiKey = runContext.render(apiKey);
         String resolvedRuleId = runContext.render(ruleId);
 
         // Construct the API endpoint URL
-        String apiEndpoint = resolvedUrl + "/api/v1/rules/" + resolvedRuleId + "/run";
+        String apiEndpoint = resolvedBaseUrl + "/api/v1/rules/" + resolvedRuleId + "/_run";
 
         // Create connection
         URL apiUrl = new URL(apiEndpoint);

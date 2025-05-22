@@ -30,7 +30,7 @@ java {
 }
 
 group = "io.kestra.plugin"
-description = 'Plugin template for Kestra'
+description = 'Sifflet plugin for Kestra'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
@@ -154,11 +154,12 @@ tasks.withType(GenerateModuleMetadata).configureEach {
 }
 
 jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     manifest {
         attributes(
                 "X-Kestra-Name": project.name,
-                "X-Kestra-Title": "Template",
-                "X-Kestra-Group": project.group + ".templates",
+                "X-Kestra-Title": "Sifflet",
+                "X-Kestra-Group": project.group + ".sifflet",
                 "X-Kestra-Description": project.description,
                 "X-Kestra-Version": project.version
         )
