@@ -157,10 +157,11 @@ jar {
     manifest {
         attributes(
                 "X-Kestra-Name": project.name,
-                "X-Kestra-Title": "Template",
-                "X-Kestra-Group": project.group + ".templates",
+                "X-Kestra-Title": "Sifflet",
+                "X-Kestra-Group": project.group,
                 "X-Kestra-Description": project.description,
-                "X-Kestra-Version": project.version
+                "X-Kestra-Version": project.version,
+                "X-Kestra-Icon": "sifflet.svg"
         )
     }
 }
