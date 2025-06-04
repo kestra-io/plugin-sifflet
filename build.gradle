@@ -47,6 +47,9 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok"
     compileOnly "org.projectlombok:lombok"
 
+    // validation
+    compileOnly "jakarta.validation:jakarta.validation-api:3.0.2"
+
     // kestra
     annotationProcessor group: "io.kestra", name: "processor", version: kestraVersion
     compileOnly group: "io.kestra", name: "core", version: kestraVersion
@@ -160,8 +163,7 @@ jar {
                 "X-Kestra-Title": "Sifflet",
                 "X-Kestra-Group": project.group,
                 "X-Kestra-Description": project.description,
-                "X-Kestra-Version": project.version,
-                "X-Kestra-Icon": "sifflet.svg"
+                "X-Kestra-Version": project.version
         )
     }
 }

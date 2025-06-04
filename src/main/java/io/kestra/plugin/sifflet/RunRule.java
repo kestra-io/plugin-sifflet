@@ -15,6 +15,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import jakarta.validation.constraints.NotNull;
 
 @SuperBuilder
 @ToString
@@ -27,11 +28,23 @@ import java.time.Duration;
                 "apiKey: \"{{ secret('SIFFLET_API_KEY') }}\"",
                 "ruleId: \"rule-123\"",
                 "baseUrl: \"https://api.siffletdata.com\""
-        })
+        }),
+        @Example(title = "Run a Sifflet rule", code = """
+                id: sifflet_flow
+                namespace: company.team
+                tasks:
+                  - id: run_rule
+                    type: io.kestra.plugin.sifflet.RunRule
+                    apiKey: "{{ secret('SIFFLET_API_KEY') }}"
+                    ruleId: "rule-123"
+                    baseUrl: "https://api.siffletdata.com"
+                """
+        )
 })
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
     @Schema(title = "Sifflet API key", description = "API key for authenticating with Sifflet", required = true)
+    @NotNull
     private String apiKey;
 
     @Schema(title = "Rule ID", description = "ID of the Sifflet rule to run")
