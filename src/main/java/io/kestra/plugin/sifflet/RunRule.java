@@ -24,11 +24,6 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @Schema(title = "Run a Sifflet data quality rule", description = "Execute a Sifflet rule to validate data quality")
 @Plugin(examples = {
-        @Example(title = "Run a Sifflet rule", code = {
-                "apiKey: \"{{ secret('SIFFLET_API_KEY') }}\"",
-                "ruleId: \"rule-123\"",
-                "baseUrl: \"https://api.siffletdata.com\""
-        }),
         @Example(title = "Run a Sifflet rule", code = """
                 id: sifflet_flow
                 namespace: company.team
