@@ -25,15 +25,15 @@ import jakarta.validation.constraints.NotNull;
 @Schema(title = "Run a Sifflet data quality rule", description = "Execute a Sifflet rule to validate data quality")
 @Plugin(examples = {
         @Example(title = "Run a Sifflet rule", code = """
-                id: sifflet_flow
-                namespace: company.team
-                tasks:
-                  - id: run_rule
-                    type: io.kestra.plugin.sifflet.RunRule
-                    apiKey: "{{ secret('SIFFLET_API_KEY') }}"
-                    ruleId: "rule-123"
-                    baseUrl: "https://api.siffletdata.com"
-                """
+id: sifflet_flow
+namespace: company.team
+tasks:
+  - id: run_rule
+    type: io.kestra.plugin.sifflet.RunRule
+    apiKey: "{{ secret('SIFFLET_API_KEY') }}"
+    ruleId: "rule-123"
+    baseUrl: "https://api.siffletdata.com"
+"""
         )
 })
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
