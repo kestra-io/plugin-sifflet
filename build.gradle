@@ -46,7 +46,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok"
 
     // validation
-    compileOnly "jakarta.validation:jakarta.validation-api:3.0.2"
+    compileOnly "jakarta.validation:jakarta.validation-api:3.1.1"
 
     // kestra
     annotationProcessor group: "io.kestra", name: "processor", version: kestraVersion
