@@ -1,0 +1,8 @@
+group: io.kestra.plugin.sifflet
+name: "sifflet"
+title: "sifflet"
+description: "This plugin provides tasks for interacting with Sifflet data quality platform."
+body: ""
+videos: []
+createdBy: "Kestra Core Team"
+managedBy: "Kestra Core Team"
