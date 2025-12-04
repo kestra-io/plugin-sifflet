@@ -1,8 +1,8 @@
 group: io.kestra.plugin.sifflet
 name: "sifflet"
 title: "sifflet"
-description: "This plugin provides tasks for interacting with Sifflet data quality platform."
-body: ""
+description: "Tasks that execute data quality rules on the Sifflet platform."
+body: "Provide the Sifflet `apiKey`, `ruleId`, and optional `baseUrl` or timeout to trigger rule runs via the API and capture status codes and responses for alerting or lineage tracking."
 videos: []
 createdBy: "Kestra Core Team"
 managedBy: "Kestra Core Team"
