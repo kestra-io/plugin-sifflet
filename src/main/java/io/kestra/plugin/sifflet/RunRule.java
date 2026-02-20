@@ -22,7 +22,7 @@ import jakarta.validation.constraints.NotNull;
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
-@Schema(title = "Run a Sifflet data quality rule", description = "Execute a Sifflet rule to validate data quality")
+@Schema(title = "Trigger a Sifflet data quality rule", description = "Call Sifflet's `/api/v1/rules/{ruleId}/_run` endpoint to launch a rule run. Inputs are rendered with the Run Context; defaults include `https://api.siffletdata.com` and a 30s timeout.")
 @Plugin(examples = {
         @Example(title = "Run a Sifflet rule", code = """
             id: sifflet_flow
@@ -34,21 +34,32 @@ import jakarta.validation.constraints.NotNull;
                 ruleId: "rule-123"
                 baseUrl: "https://api.siffletdata.com"
             """
+        ),
+        @Example(title = "Run with default base URL and custom timeout", code = """
+            id: sifflet_flow
+            namespace: company.team
+            tasks:
+              - id: run_rule_timeout
+                type: io.kestra.plugin.sifflet.RunRule
+                apiKey: "{{ secret('SIFFLET_API_KEY') }}"
+                ruleId: "rule-456"
+                requestTimeout: 60
+            """
         )
 })
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
-    @Schema(title = "Sifflet API key", description = "API key for authenticating with Sifflet", required = true)
+    @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
     @NotNull
     private String apiKey;
 
-    @Schema(title = "Rule ID", description = "ID of the Sifflet rule to run")
+    @Schema(title = "Rule ID", description = "Identifier of the Sifflet rule to execute; required for a valid call and rendered before the request")
     private String ruleId;
 
-    @Schema(title = "Sifflet API base URL", description = "Base URL for the Sifflet API", required = true)
+    @Schema(title = "Sifflet API base URL", description = "Base URL for the Sifflet API; defaults to `https://api.siffletdata.com` when omitted")
     private String baseUrl;
 
-    @Schema(title = "Request timeout", description = "Timeout for the API request in seconds", defaultValue = "30")
+    @Schema(title = "Request timeout", description = "Timeout in seconds for both connection and request; defaults to 30", defaultValue = "30")
     private Integer requestTimeout;
 
     @Override
@@ -124,4 +135,3 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
         private final String response;
     }
 }
-
