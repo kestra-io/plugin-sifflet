@@ -1,13 +1,15 @@
 package io.kestra.plugin.sifflet;
 
-import io.kestra.core.runners.RunContext;
-import io.kestra.core.runners.RunContextFactory;
-import io.kestra.core.junit.annotations.KestraTest;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
+import io.kestra.core.junit.annotations.KestraTest;
+import io.kestra.core.runners.RunContext;
+import io.kestra.core.runners.RunContextFactory;
+
 import jakarta.inject.Inject;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -24,19 +26,19 @@ class RunRuleTest {
         RunContext runContext = runContextFactory.of(Map.of());
 
         RunRule task = RunRule.builder()
-                .id("test-task")
-                .type(RunRule.class.getName())
-                .apiKey("test-api-key")
-                .ruleId("test-rule-id")
-                .build();
+            .id("test-task")
+            .type(RunRule.class.getName())
+            .apiKey("test-api-key")
+            .ruleId("test-rule-id")
+            .build();
 
         // Mock the actual HTTP call for unit testing
         RunRule.Output output = RunRule.Output.builder()
-                .ruleId("test-rule-id")
-                .status("SUCCESS")
-                .statusCode(200)
-                .response("{\"status\":\"success\",\"message\":\"Rule executed successfully\"}")
-                .build();
+            .ruleId("test-rule-id")
+            .status("SUCCESS")
+            .statusCode(200)
+            .response("{\"status\":\"success\",\"message\":\"Rule executed successfully\"}")
+            .build();
 
         assertThat(output.getRuleId(), is("test-rule-id"));
         assertThat(output.getStatus(), is("SUCCESS"));
@@ -54,13 +56,14 @@ class RunRuleTest {
         String ruleId = System.getenv("SIFFLET_RULE_ID");
 
         RunRule task = RunRule.builder()
-                .id("test-task")
-                .type(RunRule.class.getName())
-                .apiKey(apiKey)
-                .ruleId(ruleId)
-                .build();
+            .id("test-task")
+            .type(RunRule.class.getName())
+            .apiKey(apiKey)
+            .ruleId(ruleId)
+            .build();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() ->
+        {
             RunRule.Output output = task.run(runContext);
             assertThat(output.getRuleId(), is(ruleId));
             assertThat(output.getStatus(), is(notNullValue()));

@@ -1,52 +1,61 @@
 package io.kestra.plugin.sifflet;
 
-import io.kestra.core.models.annotations.Example;
-import io.kestra.core.models.annotations.Plugin;
-import io.kestra.core.models.tasks.RunnableTask;
-import io.kestra.core.models.tasks.Task;
-import io.kestra.core.runners.RunContext;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.slf4j.Logger;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+
+import org.slf4j.Logger;
+
+import io.kestra.core.models.annotations.Example;
+import io.kestra.core.models.annotations.Plugin;
+import io.kestra.core.models.tasks.RunnableTask;
+import io.kestra.core.models.tasks.Task;
+import io.kestra.core.runners.RunContext;
+
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
 @ToString
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
-@Schema(title = "Trigger a Sifflet data quality rule", description = "Call Sifflet's `/api/v1/rules/{ruleId}/_run` endpoint to launch a rule run. Inputs are rendered with the Run Context; defaults include `https://api.siffletdata.com` and a 30s timeout.")
-@Plugin(examples = {
-        @Example(title = "Run a Sifflet rule", code = """
-            id: sifflet_flow
-            namespace: company.team
-            tasks:
-              - id: run_rule
-                type: io.kestra.plugin.sifflet.RunRule
-                apiKey: "{{ secret('SIFFLET_API_KEY') }}"
-                ruleId: "rule-123"
-                baseUrl: "https://api.siffletdata.com"
-            """
+@Schema(
+    title = "Trigger a Sifflet data quality rule",
+    description = "Call Sifflet's `/api/v1/rules/{ruleId}/_run` endpoint to launch a rule run. Inputs are rendered with the Run Context; defaults include `https://api.siffletdata.com` and a 30s timeout."
+)
+@Plugin(
+    examples = {
+        @Example(
+            title = "Run a Sifflet rule", code = """
+                id: sifflet_flow
+                namespace: company.team
+                tasks:
+                  - id: run_rule
+                    type: io.kestra.plugin.sifflet.RunRule
+                    apiKey: "{{ secret('SIFFLET_API_KEY') }}"
+                    ruleId: "rule-123"
+                    baseUrl: "https://api.siffletdata.com"
+                """
         ),
-        @Example(title = "Run with default base URL and custom timeout", code = """
-            id: sifflet_flow
-            namespace: company.team
-            tasks:
-              - id: run_rule_timeout
-                type: io.kestra.plugin.sifflet.RunRule
-                apiKey: "{{ secret('SIFFLET_API_KEY') }}"
-                ruleId: "rule-456"
-                requestTimeout: 60
-            """
+        @Example(
+            title = "Run with default base URL and custom timeout", code = """
+                id: sifflet_flow
+                namespace: company.team
+                tasks:
+                  - id: run_rule_timeout
+                    type: io.kestra.plugin.sifflet.RunRule
+                    apiKey: "{{ secret('SIFFLET_API_KEY') }}"
+                    ruleId: "rule-456"
+                    requestTimeout: 60
+                """
         )
-})
+    }
+)
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
     @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
@@ -75,20 +84,20 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
         // Create HTTP client
         HttpClient client = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(timeout))
-                .build();
+            .connectTimeout(Duration.ofSeconds(timeout))
+            .build();
 
         // Build the API endpoint URL
         String apiUrl = renderedBaseUrl + "/api/v1/rules/" + renderedRuleId + "/_run";
 
         // Create HTTP request
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(apiUrl))
-                .header("Authorization", "Bearer " + renderedApiKey)
-                .header("Content-Type", "application/json")
-                .timeout(Duration.ofSeconds(timeout))
-                .POST(HttpRequest.BodyPublishers.noBody())
-                .build();
+            .uri(URI.create(apiUrl))
+            .header("Authorization", "Bearer " + renderedApiKey)
+            .header("Content-Type", "application/json")
+            .timeout(Duration.ofSeconds(timeout))
+            .POST(HttpRequest.BodyPublishers.noBody())
+            .build();
 
         // Execute the request
         logger.debug("Sending request to: {}", apiUrl);
@@ -103,19 +112,19 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
         if (statusCode >= 200 && statusCode < 300) {
             logger.info("Rule execution completed successfully");
             return Output.builder()
-                    .ruleId(renderedRuleId)
-                    .status("SUCCESS")
-                    .statusCode(statusCode)
-                    .response(responseBody)
-                    .build();
+                .ruleId(renderedRuleId)
+                .status("SUCCESS")
+                .statusCode(statusCode)
+                .response(responseBody)
+                .build();
         } else {
             logger.error("Rule execution failed with status code: {}", statusCode);
             return Output.builder()
-                    .ruleId(renderedRuleId)
-                    .status("FAILED")
-                    .statusCode(statusCode)
-                    .response(responseBody)
-                    .build();
+                .ruleId(renderedRuleId)
+                .status("FAILED")
+                .statusCode(statusCode)
+                .response(responseBody)
+                .build();
         }
     }
 
