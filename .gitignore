@@ -34,3 +34,4 @@ src/test/resources/application-test.yml
 
 ### Bin folder ###
 bin/
+.factorypath
