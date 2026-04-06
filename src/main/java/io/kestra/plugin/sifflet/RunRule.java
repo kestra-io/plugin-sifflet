@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import io.kestra.core.models.annotations.PluginProperty;
 
 @SuperBuilder
 @ToString
@@ -60,15 +61,19 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
     @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
     @NotNull
+    @PluginProperty(group = "main")
     private String apiKey;
 
     @Schema(title = "Rule ID", description = "Identifier of the Sifflet rule to execute; required for a valid call and rendered before the request")
+    @PluginProperty(group = "advanced")
     private String ruleId;
 
     @Schema(title = "Sifflet API base URL", description = "Base URL for the Sifflet API; defaults to `https://api.siffletdata.com` when omitted")
+    @PluginProperty(group = "main")
     private String baseUrl;
 
     @Schema(title = "Request timeout", description = "Timeout in seconds for both connection and request; defaults to 30", defaultValue = "30")
+    @PluginProperty(group = "execution")
     private Integer requestTimeout;
 
     @Override
