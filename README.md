@@ -33,62 +33,31 @@
         <img src="https://kestra.io/startvideo.png" alt="Get started in 4 minutes with Kestra" width="640px" />
     </a>
 </p>
-<p align="center" style="color:grey;"><i>Get started with Kestra in 4 minutes.</i></p>
-
+<p align="center" style="color:grey;"><i>Get started in 4 minutes with Kestra.</i></p>
 
 # Kestra Sifflet Plugin
 
-This plugin provides tasks to interact with Sifflet, a data quality and observability platform. It allows you to run rules and manage data quality checks directly from your Kestra workflows.
+## Why
 
-## Tasks
+- What user problem does this solve? Teams need to execute data quality rules on the Sifflet platform from orchestrated workflows instead of relying on manual console work, ad hoc scripts, or disconnected schedulers.
+- Why would a team adopt this plugin in a workflow? It keeps Sifflet steps in the same Kestra flow as upstream preparation, approvals, retries, notifications, and downstream systems.
+- What operational/business outcome does it enable? It reduces manual handoffs and fragmented tooling while improving reliability, traceability, and delivery speed for processes that depend on Sifflet.
 
-### RunRule
+## What
 
-The `RunRule` task allows you to execute Sifflet rules and monitor their execution status. It provides the following features:
+- Provides plugin components under `io.kestra.plugin.sifflet`.
+- Includes classes such as `RunRule`.
 
-- Execute rules by their ID
-- Monitor rule execution status
-- Get detailed execution results
-- Handle rule execution failures
+## Documentation
+* Full documentation can be found under: [kestra.io/docs](https://kestra.io/docs)
+* Documentation for developing a plugin is included in the [Plugin Developer Guide](https://kestra.io/docs/plugin-developer-guide/)
 
-#### Example
-
-```yaml
-id: sifflet-rule-execution
-namespace: dev
-
-tasks:
-  - id: run-sifflet-rule
-    type: io.kestra.plugin.sifflet.RunRule
-    url: "https://your-sifflet-instance.com"
-    token: "{{ secret('SIFFLET_TOKEN') }}"
-    ruleId: "rule-123"
-    wait: true
-    maxDuration: "PT5M"
-```
-
-## Installation
-
-The plugin is available on the Kestra marketplace. You can install it by adding the following to your `kestra.yml`:
-
-```yaml
-plugins:
-  - io.kestra.plugin.sifflet
-```
-
-## Configuration
-
-The plugin requires the following configuration:
-
-- `url`: The URL of your Sifflet instance
-- `token`: Your Sifflet API token (should be stored as a secret)
 
 ## License
-
 Apache 2.0 © [Kestra Technologies](https://kestra.io)
+
+## Stay up to date
 
 We release new versions every month. Give the [main repository](https://github.com/kestra-io/kestra) a star to stay up to date with the latest releases and get notified about future updates.
 
 ![Star the repo](https://kestra.io/star.gif)
-
-
