@@ -61,7 +61,7 @@ public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
     @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
     @NotNull
-    @PluginProperty(group = "main")
+    @PluginProperty(secret = true, group = "main")
     private String apiKey;
 
     @Schema(title = "Rule ID", description = "Identifier of the Sifflet rule to execute; required for a valid call and rendered before the request")
