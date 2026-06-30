@@ -59,6 +59,7 @@ import io.kestra.core.models.annotations.PluginProperty;
 )
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
+    @ToString.Exclude
     @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
     @NotNull
     @PluginProperty(secret = true, group = "main")
