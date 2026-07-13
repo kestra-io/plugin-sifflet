@@ -32,7 +32,7 @@ import io.kestra.core.models.annotations.PluginProperty;
 @Plugin(
     examples = {
         @Example(
-            title = "Run a Sifflet rule", code = """
+            title = "Run a Sifflet rule", full = true, code = """
                 id: sifflet_flow
                 namespace: company.team
                 tasks:
@@ -44,7 +44,7 @@ import io.kestra.core.models.annotations.PluginProperty;
                 """
         ),
         @Example(
-            title = "Run with default base URL and custom timeout", code = """
+            title = "Run with default base URL and custom timeout", full = true, code = """
                 id: sifflet_flow
                 namespace: company.team
                 tasks:
@@ -59,6 +59,7 @@ import io.kestra.core.models.annotations.PluginProperty;
 )
 public class RunRule extends Task implements RunnableTask<RunRule.Output> {
 
+    @ToString.Exclude
     @Schema(title = "Sifflet API key", description = "Bearer token for the Sifflet API; renderable and should be stored as a secret", required = true)
     @NotNull
     @PluginProperty(secret = true, group = "main")
